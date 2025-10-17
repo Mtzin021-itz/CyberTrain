@@ -1,0 +1,2661 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyberTrain - Treinamento em Segurança da Informação</title>
+    <style>
+        :root {
+            --primary-color: #0a192f;
+            --secondary-color: #112240;
+            --accent-color: #64ffda;
+            --text-color: #e6f1ff;
+            --light-text: #8892b0;
+            --success-color: #4CAF50;
+            --warning-color: #FFC107;
+            --danger-color: #F44336;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Header e Navegação */
+        header {
+            background-color: var(--secondary-color);
+            padding: 15px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            color: var(--accent-color);
+            margin-left: 10px;
+        }
+        
+        .logo-icon {
+            font-size: 2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 25px;
+        }
+        
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            cursor: pointer;
+        }
+        
+        .nav-links a:hover {
+            color: var(--accent-color);
+        }
+        
+        .user-actions {
+            display: flex;
+            align-items: center;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #52e0c4;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: var(--accent-color);
+            border: 1px solid var(--accent-color);
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+        }
+        
+        .btn-small {
+            padding: 8px 15px;
+            font-size: 0.9rem;
+        }
+        
+        /* Tela de Login/Cadastro */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh;
+        }
+        
+        .auth-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 40px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 30px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-tab {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--light-text);
+        }
+        
+        .auth-tab.active {
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--light-text);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            color: var(--text-color);
+            font-size: 1rem;
+        }
+        
+        textarea.form-control {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-color);
+        }
+        
+        /* Dashboard */
+        .dashboard {
+            padding: 40px 0;
+        }
+        
+        .dashboard-header {
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .stat-card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: var(--light-text);
+        }
+        
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--accent-color);
+        }
+        
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+        
+        .module-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 10px 0;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--accent-color);
+            border-radius: 4px;
+        }
+        
+        .achievements {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .achievement {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+        }
+        
+        /* Conteúdos */
+        .modules-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .module-item {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .module-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .module-image {
+            height: 160px;
+            background-color: rgba(100, 255, 218, 0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+        }
+        
+        .module-content {
+            padding: 20px;
+        }
+        
+        .module-content h3 {
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+        
+        .module-content p {
+            color: var(--light-text);
+            margin-bottom: 15px;
+        }
+        
+        .module-meta {
+            display: flex;
+            justify-content: space-between;
+            color: var(--light-text);
+            font-size: 0.9rem;
+        }
+        
+        /* Conteúdo Detalhado */
+        .content-detail {
+            padding: 30px 0;
+        }
+        
+        .content-header {
+            margin-bottom: 30px;
+        }
+        
+        .content-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        
+        .content-body {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .content-body h3 {
+            color: var(--accent-color);
+            margin-bottom: 20px;
+        }
+        
+        .content-body p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+        
+        .content-body ul, .content-body ol {
+            margin-left: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .content-body li {
+            margin-bottom: 10px;
+        }
+        
+        .content-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        /* Simulações */
+        .simulation-container {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        
+        .simulation-area {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 20px;
+            min-height: 500px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .simulation-controls {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .simulation-list {
+            margin-top: 30px;
+        }
+        
+        .simulation-item {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .simulation-item:hover {
+            background-color: rgba(100, 255, 218, 0.05);
+        }
+        
+        .simulation-status {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+        
+        .status-completed {
+            background-color: var(--success-color);
+        }
+        
+        .status-in-progress {
+            background-color: var(--warning-color);
+        }
+        
+        .status-not-started {
+            background-color: var(--light-text);
+        }
+        
+        /* Quiz */
+        .quiz-container {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .quiz-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .quiz-question {
+            margin-bottom: 25px;
+        }
+        
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+        
+        .quiz-option {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quiz-option:hover {
+            background-color: rgba(100, 255, 218, 0.1);
+            border-color: var(--accent-color);
+        }
+        
+        .quiz-option.selected {
+            background-color: rgba(100, 255, 218, 0.2);
+            border-color: var(--accent-color);
+        }
+        
+        .quiz-option.correct {
+            background-color: rgba(76, 175, 80, 0.2);
+            border-color: var(--success-color);
+        }
+        
+        .quiz-option.incorrect {
+            background-color: rgba(244, 67, 54, 0.2);
+            border-color: var(--danger-color);
+        }
+        
+        .quiz-navigation {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .quiz-results {
+            text-align: center;
+            padding: 30px;
+        }
+        
+        .quiz-score {
+            font-size: 2rem;
+            color: var(--accent-color);
+            margin: 20px 0;
+        }
+        
+        /* Recursos */
+        .resources-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+            margin-top: 30px;
+        }
+        
+        .resource-card {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 25px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .resource-icon {
+            font-size: 3rem;
+            margin-bottom: 15px;
+            color: var(--accent-color);
+        }
+        
+        /* Recurso Detalhado */
+        .resource-content {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .term-list {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .term-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .term-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .tool-list, .checklist-category, .report-types {
+            display: grid;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .tool-item, .checklist-item, .report-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .tool-item h4, .checklist-item h4, .report-item h4 {
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+        
+        .checklist-steps {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        .checklist-steps li {
+            margin-bottom: 8px;
+        }
+        
+        /* Feedback */
+        .feedback-container {
+            background-color: var(--secondary-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-top: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feedback-list {
+            margin-top: 30px;
+        }
+        
+        .feedback-item {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .feedback-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .feedback-rating {
+            color: var(--accent-color);
+        }
+        
+        /* Utilitários */
+        .hidden {
+            display: none;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-4 {
+            margin-top: 40px;
+        }
+        
+        .mb-4 {
+            margin-bottom: 40px;
+        }
+        
+        .mr-3 {
+            margin-right: 15px;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .simulation-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .navbar {
+                flex-direction: column;
+            }
+            
+            .nav-links {
+                margin-top: 15px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 5px 10px;
+            }
+            
+            .user-actions {
+                margin-top: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <div class="logo" onclick="showSection('dashboard')">
+                    <span class="logo-icon">🛡️</span>
+                    <h1>CyberTrain</h1>
+                </div>
+                <ul class="nav-links">
+                    <li><a onclick="showSection('dashboard')">Dashboard</a></li>
+                    <li><a onclick="showSection('conteudos')">Conteúdos</a></li>
+                    <li><a onclick="showSection('simulacoes')">Simulações</a></li>
+                    <li><a onclick="showSection('desempenho')">Desempenho</a></li>
+                    <li><a onclick="showSection('recursos')">Recursos</a></li>
+                    <li><a onclick="showSection('feedback')">Feedback</a></li>
+                </ul>
+                <div class="user-actions">
+                    <span id="user-name" class="mr-3">Usuário</span>
+                    <button class="btn btn-outline" onclick="logout()">Sair</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Tela de Login/Cadastro -->
+    <section id="auth-section" class="container auth-container">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab active" onclick="switchAuthTab('login')">Login</div>
+                <div class="auth-tab" onclick="switchAuthTab('register')">Cadastro</div>
+            </div>
+            
+            <form id="login-form" class="auth-form active">
+                <div class="form-group">
+                    <label for="login-email">E-mail</label>
+                    <input type="email" id="login-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="login-password">Senha</label>
+                    <input type="password" id="login-password" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="login()">Entrar</button>
+            </form>
+            
+            <form id="register-form" class="auth-form">
+                <div class="form-group">
+                    <label for="register-name">Nome Completo</label>
+                    <input type="text" id="register-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-email">E-mail</label>
+                    <input type="email" id="register-email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-password">Senha</label>
+                    <input type="password" id="register-password" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="register-confirm-password">Confirmar Senha</label>
+                    <input type="password" id="register-confirm-password" class="form-control" required>
+                </div>
+                <button type="button" class="btn btn-primary" onclick="register()">Cadastrar</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="container dashboard hidden">
+        <div class="dashboard-header">
+            <h2>Dashboard</h2>
+            <p>Bem-vindo de volta ao CyberTrain! Continue seu treinamento em segurança da informação.</p>
+        </div>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Pontuação Geral</h3>
+                <div class="stat-value" id="overall-score">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Conteúdos Concluídos</h3>
+                <div class="stat-value" id="completed-content">0/12</div>
+            </div>
+            <div class="stat-card">
+                <h3>Tempo de Estudo</h3>
+                <div class="stat-value" id="study-time">0h</div>
+            </div>
+            <div class="stat-card">
+                <h3>Simulações Realizadas</h3>
+                <div class="stat-value" id="completed-simulations">0/10</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div>
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Próximo Conteúdo</h3>
+                        <button class="btn btn-primary" onclick="showSection('conteudos')">Ver Todos</button>
+                    </div>
+                    <h4>Fundamentos de Criptografia</h4>
+                    <p>Domine os conceitos básicos de criptografia e suas aplicações em segurança da informação.</p>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 30%"></div>
+                    </div>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="openContent('criptografia')">Continuar</button>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <div class="module-header">
+                        <h3>Próxima Simulação</h3>
+                        <button class="btn btn-primary" onclick="showSection('simulacoes')">Ver Todas</button>
+                    </div>
+                    <h4>Detecção de Intrusão</h4>
+                    <p>Simulação prática de detecção e resposta a incidentes de segurança.</p>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-primary" onclick="openSimulation('detecao-intrusao')">Iniciar Simulação</button>
+                    </div>
+                </div>
+            </div>
+            
+            <div>
+                <div class="module-card">
+                    <h3>Conquistas</h3>
+                    <div class="achievements">
+                        <div class="achievement">🏆</div>
+                        <div class="achievement">🔒</div>
+                        <div class="achievement">🛡️</div>
+                        <div class="achievement">⚡</div>
+                    </div>
+                </div>
+                
+                <div class="module-card">
+                    <h3>Recursos Úteis</h3>
+                    <p>Acesse ferramentas e materiais complementares para seu treinamento.</p>
+                    <div class="text-center mt-4">
+                        <button class="btn btn-outline" onclick="showSection('recursos')">Explorar Recursos</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdos -->
+    <section id="conteudos" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('dashboard')">← Voltar ao Dashboard</button>
+            <h2>Conteúdos de Treinamento</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        <p>Explore nossos módulos de treinamento em segurança da informação e redes.</p>
+        
+        <div class="modules-grid">
+            <div class="module-item" onclick="openContent('fundamentos-seguranca')">
+                <div class="module-image">🔒</div>
+                <div class="module-content">
+                    <h3>Fundamentos de Segurança</h3>
+                    <p>Conceitos básicos e princípios fundamentais de segurança da informação.</p>
+                    <div class="module-meta">
+                        <span>5 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-item" onclick="openContent('seguranca-redes')">
+                <div class="module-image">🌐</div>
+                <div class="module-content">
+                    <h3>Segurança em Redes</h3>
+                    <p>Proteção de infraestrutura de rede contra ameaças e vulnerabilidades.</p>
+                    <div class="module-meta">
+                        <span>7 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-item" onclick="openContent('criptografia')">
+                <div class="module-image">🔐</div>
+                <div class="module-content">
+                    <h3>Criptografia</h3>
+                    <p>Técnicas de criptografia para proteção de dados em repouso e em trânsito.</p>
+                    <div class="module-meta">
+                        <span>6 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-item" onclick="openContent('firewalls-ids')">
+                <div class="module-image">🛡️</div>
+                <div class="module-content">
+                    <h3>Firewalls e IDS/IPS</h3>
+                    <p>Configuração e gestão de sistemas de detecção e prevenção de intrusões.</p>
+                    <div class="module-meta">
+                        <span>4 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-item" onclick="openContent('gestao-identidade')">
+                <div class="module-image">👤</div>
+                <div class="module-content">
+                    <h3>Gestão de Identidade e Acesso</h3>
+                    <p>Controle de acesso e gestão de identidades em ambientes corporativos.</p>
+                    <div class="module-meta">
+                        <span>5 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-item" onclick="openContent('analise-vulnerabilidades')">
+                <div class="module-image">📊</div>
+                <div class="module-content">
+                    <h3>Análise de Vulnerabilidades</h3>
+                    <p>Identificação e correção de vulnerabilidades em sistemas e aplicações.</p>
+                    <div class="module-meta">
+                        <span>6 tópicos</span>
+                        <span>0% concluído</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Conteúdo Detalhado -->
+    <section id="content-detail" class="container content-detail hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('conteudos')">← Voltar aos Conteúdos</button>
+            <h2 id="content-title">Título do Conteúdo</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        
+        <div class="content-body">
+            <div id="content-material">
+                <!-- Conteúdo será carregado aqui -->
+            </div>
+            
+            <div class="quiz-container" id="content-quiz">
+                <div class="quiz-header">
+                    <h3>Teste Seu Conhecimento</h3>
+                    <span id="quiz-progress">Pergunta 1 de 5</span>
+                </div>
+                
+                <div class="quiz-question">
+                    <h4 id="quiz-question-text">Pergunta do quiz</h4>
+                </div>
+                
+                <div class="quiz-options" id="quiz-options-container">
+                    <!-- Opções serão preenchidas dinamicamente -->
+                </div>
+                
+                <div class="quiz-navigation">
+                    <button class="btn btn-outline" id="prev-question" onclick="previousQuestion()" disabled>Anterior</button>
+                    <button class="btn btn-primary" id="next-question" onclick="nextQuestion()">Próxima</button>
+                    <button class="btn btn-primary hidden" id="finish-quiz" onclick="finishQuiz()">Finalizar Quiz</button>
+                </div>
+            </div>
+            
+            <div class="quiz-results hidden" id="quiz-results">
+                <h3>Resultado do Quiz</h3>
+                <div class="quiz-score" id="quiz-score">0/0</div>
+                <p id="quiz-message">Mensagem de resultado</p>
+                <button class="btn btn-primary mt-4" onclick="showSection('conteudos')">Voltar aos Conteúdos</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulações -->
+    <section id="simulacoes" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('dashboard')">← Voltar ao Dashboard</button>
+            <h2>Simulações Práticas</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        <p>Pratique suas habilidades em ambientes simulados de segurança da informação.</p>
+        
+        <div class="simulation-list">
+            <div class="simulation-item" onclick="openSimulation('detecao-intrusao')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Detecção de Intrusão</strong>
+                    <p>Simulação de monitoramento de rede para identificar atividades suspeitas</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('configuracao-firewall')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Configuração de Firewall</strong>
+                    <p>Configure regras de firewall para proteger uma rede corporativa</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('analise-malware')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Análise de Malware</strong>
+                    <p>Identifique e analise amostras de malware em um ambiente controlado</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('resposta-incidentes')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Resposta a Incidentes</strong>
+                    <p>Simulação de resposta a um incidente de segurança cibernética</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('teste-invasao')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Teste de Invasão Ética</strong>
+                    <p>Realize testes de penetração em sistemas autorizados</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('forense-digital')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Forense Digital</strong>
+                    <p>Coleta e análise de evidências digitais após um incidente de segurança</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('seguranca-aplicacoes')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Segurança de Aplicações Web</strong>
+                    <p>Identifique e explore vulnerabilidades comuns em aplicações web</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('engenharia-social')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Prevenção à Engenharia Social</strong>
+                    <p>Reconheça e previna ataques baseados em manipulação psicológica</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('seguranca-cloud')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Segurança em Nuvem</strong>
+                    <p>Configure e gerence segurança em ambientes de computação em nuvem</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+            
+            <div class="simulation-item" onclick="openSimulation('gestao-riscos')">
+                <div>
+                    <span class="simulation-status status-not-started"></span>
+                    <strong>Gestão de Riscos de Segurança</strong>
+                    <p>Identifique, avalie e priorize riscos de segurança da informação</p>
+                </div>
+                <button class="btn btn-outline btn-small">Iniciar</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Simulação Detalhada -->
+    <section id="simulation-detail" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('simulacoes')">← Voltar às Simulações</button>
+            <h2 id="simulation-title">Título da Simulação</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        
+        <div class="simulation-container">
+            <div class="simulation-area">
+                <h3 id="simulation-scenario">Cenário da Simulação</h3>
+                <p id="simulation-description">Descrição detalhada da simulação.</p>
+                
+                <div class="quiz-container">
+                    <div class="quiz-header">
+                        <h3>Simulação Interativa</h3>
+                        <span id="simulation-progress-text">Passo 1 de 3</span>
+                    </div>
+                    
+                    <div class="quiz-question">
+                        <h4 id="simulation-question">Pergunta da simulação:</h4>
+                        <p id="simulation-context">Contexto da pergunta.</p>
+                    </div>
+                    
+                    <div class="quiz-options" id="simulation-options">
+                        <!-- Opções serão preenchidas dinamicamente -->
+                    </div>
+                    
+                    <div class="quiz-navigation">
+                        <button class="btn btn-outline" id="prev-simulation-step" onclick="previousSimulationStep()" disabled>Anterior</button>
+                        <button class="btn btn-primary" id="next-simulation-step" onclick="nextSimulationStep()">Próxima</button>
+                        <button class="btn btn-primary hidden" id="finish-simulation" onclick="finishSimulation()">Finalizar Simulação</button>
+                    </div>
+                </div>
+                
+                <div class="quiz-results hidden" id="simulation-results">
+                    <h3>Resultado da Simulação</h3>
+                    <div class="quiz-score" id="simulation-score">0/0</div>
+                    <p id="simulation-message">Mensagem de resultado</p>
+                    <button class="btn btn-primary mt-4" onclick="showSection('simulacoes')">Voltar às Simulações</button>
+                </div>
+            </div>
+            
+            <div class="simulation-controls">
+                <h3>Personalizar Simulação</h3>
+                <div class="form-group">
+                    <label for="simulation-difficulty">Dificuldade</label>
+                    <select id="simulation-difficulty" class="form-control">
+                        <option value="easy">Fácil</option>
+                        <option value="medium" selected>Médio</option>
+                        <option value="hard">Difícil</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="simulation-scenario-type">Tipo de Cenário</label>
+                    <select id="simulation-scenario-type" class="form-control">
+                        <option value="corporate" selected>Corporativo</option>
+                        <option value="government">Governamental</option>
+                        <option value="financial">Financeiro</option>
+                        <option value="healthcare">Saúde</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="simulation-time-limit">Limite de Tempo (minutos)</label>
+                    <input type="number" id="simulation-time-limit" class="form-control" min="5" max="60" value="30">
+                </div>
+                
+                <div class="form-group">
+                    <button class="btn btn-primary" style="width: 100%;" onclick="applySimulationSettings()">Aplicar Configurações</button>
+                </div>
+                
+                <h3 class="mt-4">Progresso</h3>
+                <div class="progress-bar">
+                    <div class="progress" id="simulation-progress-bar" style="width: 0%"></div>
+                </div>
+                <p class="text-center" id="simulation-progress-percent">0% concluído</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Desempenho -->
+    <section id="desempenho" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('dashboard')">← Voltar ao Dashboard</button>
+            <h2>Seu Desempenho</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        <p>Acompanhe seu progresso e desempenho nos treinamentos.</p>
+        
+        <div class="dashboard-stats">
+            <div class="stat-card">
+                <h3>Pontuação Geral</h3>
+                <div class="stat-value">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>Conteúdos Concluídos</h3>
+                <div class="stat-value">0/12</div>
+            </div>
+            <div class="stat-card">
+                <h3>Taxa de Acerto</h3>
+                <div class="stat-value">0%</div>
+            </div>
+            <div class="stat-card">
+                <h3>Nível de Habilidade</h3>
+                <div class="stat-value">Iniciante</div>
+            </div>
+        </div>
+        
+        <div class="dashboard-grid">
+            <div class="module-card">
+                <h3>Progresso por Área</h3>
+                <div class="form-group">
+                    <label>Fundamentos de Segurança</label>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Segurança em Redes</label>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Criptografia</label>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Firewalls e IDS/IPS</label>
+                    <div class="progress-bar">
+                        <div class="progress" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="module-card">
+                <h3>Conquistas Recentes</h3>
+                <div class="achievements">
+                    <div class="achievement">🎯</div>
+                    <div class="achievement">📚</div>
+                </div>
+                <p class="mt-4">Complete mais conteúdos para desbloquear novas conquistas!</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recursos -->
+    <section id="recursos" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('dashboard')">← Voltar ao Dashboard</button>
+            <h2>Recursos Adicionais</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        <p>Ferramentas e materiais complementares para seu treinamento.</p>
+        
+        <div class="resources-grid">
+            <div class="resource-card" onclick="openResource('glossario')">
+                <div class="resource-icon">📖</div>
+                <h3>Glossário</h3>
+                <p>Termos e definições importantes de segurança da informação.</p>
+            </div>
+            
+            <div class="resource-card" onclick="openResource('ferramentas')">
+                <div class="resource-icon">🔧</div>
+                <h3>Ferramentas</h3>
+                <p>Utilitários e softwares úteis para práticas de segurança.</p>
+            </div>
+            
+            <div class="resource-card" onclick="openResource('checklists')">
+                <div class="resource-icon">📋</div>
+                <h3>Checklists</h3>
+                <p>Listas de verificação para implementação de segurança.</p>
+            </div>
+            
+            <div class="resource-card" onclick="openResource('relatorios')">
+                <div class="resource-icon">📊</div>
+                <h3>Relatórios</h3>
+                <p>Modelos de relatórios de segurança e auditoria.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recurso Detalhado -->
+    <section id="resource-detail" class="container content-detail hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('recursos')">← Voltar aos Recursos</button>
+            <h2 id="resource-title">Título do Recurso</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        
+        <div class="resource-content">
+            <div id="resource-content">
+                <!-- Conteúdo do recurso será carregado aqui -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback -->
+    <section id="feedback" class="container hidden">
+        <div class="content-nav">
+            <button class="btn btn-outline" onclick="showSection('dashboard')">← Voltar ao Dashboard</button>
+            <h2>Feedback e Avaliação</h2>
+            <div></div> <!-- Elemento vazio para alinhamento -->
+        </div>
+        <p>Compartilhe sua experiência com a plataforma CyberTrain.</p>
+        
+        <div class="feedback-container">
+            <h3>Enviar Feedback</h3>
+            <div class="form-group">
+                <label for="feedback-rating">Avaliação Geral</label>
+                <select id="feedback-rating" class="form-control">
+                    <option value="5">Excelente - ⭐⭐⭐⭐⭐</option>
+                    <option value="4">Muito Bom - ⭐⭐⭐⭐</option>
+                    <option value="3">Bom - ⭐⭐⭐</option>
+                    <option value="2">Regular - ⭐⭐</option>
+                    <option value="1">Ruim - ⭐</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedback-category">Categoria</label>
+                <select id="feedback-category" class="form-control">
+                    <option value="content">Conteúdos</option>
+                    <option value="simulations">Simulações</option>
+                    <option value="usability">Usabilidade</option>
+                    <option value="performance">Desempenho</option>
+                    <option value="suggestions">Sugestões</option>
+                    <option value="other">Outro</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="feedback-message">Mensagem</label>
+                <textarea id="feedback-message" class="form-control" placeholder="Descreva sua experiência, sugestões ou problemas encontrados..."></textarea>
+            </div>
+            
+            <button class="btn btn-primary" onclick="submitFeedback()">Enviar Feedback</button>
+        </div>
+        
+        <div class="feedback-list">
+            <h3>Seus Feedbacks Anteriores</h3>
+            <div id="user-feedback-list">
+                <!-- Feedbacks do usuário serão carregados aqui -->
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // Estado da aplicação
+        let currentUser = null;
+        let studyStartTime = null;
+        let studyTimer = null;
+        let totalStudyTime = 0;
+        let currentContent = null;
+        let currentSimulation = null;
+        let currentResource = null;
+        let currentQuiz = null;
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+        let quizScore = 0;
+        let simulationScore = 0;
+        let currentSimulationStep = 0;
+        
+        // Dados dos conteúdos
+        const contents = {
+            'fundamentos-seguranca': {
+                title: 'Fundamentos de Segurança da Informação',
+                material: `
+                    <h3>Introdução</h3>
+                    <p>A segurança da informação é a prática de defender informações contra acesso não autorizado, uso, divulgação, disruptura, modificação ou destruição.</p>
+                    
+                    <h3>Conceitos Fundamentais</h3>
+                    <p>Os pilares fundamentais da segurança da informação são:</p>
+                    <ul>
+                        <li><strong>Confidencialidade:</strong> Garantir que informações sejam acessadas apenas por pessoas autorizadas.</li>
+                        <li><strong>Integridade:</strong> Manter a precisão e completude das informações.</li>
+                        <li><strong>Disponibilidade:</strong> Garantir que informações e sistemas estejam acessíveis quando necessários.</li>
+                        <li><strong>Autenticidade:</strong> Verificar a identidade de usuários e a origem das informações.</li>
+                        <li><strong>Não-repúdio:</strong> Impedir que alguém negue a autoria de uma ação.</li>
+                    </ul>
+                    
+                    <h3>Aplicações Práticas</h3>
+                    <p>Aplicações práticas incluem políticas de segurança, controle de acesso, criptografia e gestão de riscos.</p>
+                `,
+                quiz: [
+                    {
+                        question: 'Qual dos seguintes NÃO é um pilar fundamental da segurança da informação?',
+                        options: [
+                            'Confidencialidade',
+                            'Integridade',
+                            'Disponibilidade',
+                            'Velocidade'
+                        ],
+                        correct: 3
+                    },
+                    {
+                        question: 'O que significa o princípio de confidencialidade?',
+                        options: [
+                            'Garantir que sistemas estejam sempre disponíveis',
+                            'Proteger informações contra acesso não autorizado',
+                            'Manter a precisão dos dados',
+                            'Verificar a identidade dos usuários'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual princípio impede que alguém negue a autoria de uma ação?',
+                        options: [
+                            'Integridade',
+                            'Não-repúdio',
+                            'Autenticidade',
+                            'Confidencialidade'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual destes é um exemplo de violação de integridade?',
+                        options: [
+                            'Um hacker acessa dados confidenciais',
+                            'Um sistema fica indisponível por horas',
+                            'Um funcionário altera dados sem autorização',
+                            'Um usuário nega ter enviado um e-mail'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'Qual destas medidas ajuda a garantir a disponibilidade?',
+                        options: [
+                            'Criptografia de dados',
+                            'Backups regulares',
+                            'Controle de acesso',
+                            'Assinaturas digitais'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'seguranca-redes': {
+                title: 'Segurança em Redes de Computadores',
+                material: `
+                    <h3>Introdução</h3>
+                    <p>A segurança de redes envolve políticas e práticas adotadas para prevenir e monitorar acesso não autorizado, uso indevido, modificação ou negação de uma rede de computadores e seus recursos.</p>
+                    
+                    <h3>Conceitos Fundamentais</h3>
+                    <p>Conceitos importantes incluem:</p>
+                    <ul>
+                        <li><strong>Firewalls:</strong> Sistemas que controlam o tráfego entre redes com diferentes níveis de confiança.</li>
+                        <li><strong>VPNs:</strong> Redes Privadas Virtuais que criam tunéis seguros através de redes públicas.</li>
+                        <li><strong>IDS/IPS:</strong> Sistemas de Detecção e Prevenção de Intrusões que monitoram atividades suspeitas.</li>
+                        <li><strong>Segmentação de rede:</strong> Divisão da rede em partes menores para conter possíveis violações.</li>
+                        <li><strong>Monitoramento de tráfego:</strong> Análise contínua do tráfego de rede para identificar anomalias.</li>
+                    </ul>
+                    
+                    <h3>Aplicações Práticas</h3>
+                    <p>Aplicações práticas incluem configuração de firewalls, implementação de VPNs e monitoramento de redes.</p>
+                `,
+                quiz: [
+                    {
+                        question: 'Qual é a função principal de um firewall?',
+                        options: [
+                            'Acelerar a velocidade da rede',
+                            'Controlar o tráfego entre redes',
+                            'Armazenar dados de backup',
+                            'Criptografar comunicações'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'O que significa a sigla VPN?',
+                        options: [
+                            'Virtual Private Network',
+                            'Verified Protection Node',
+                            'Virtual Protocol Network',
+                            'Verified Private Node'
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: 'Qual a diferença entre IDS e IPS?',
+                        options: [
+                            'IDS detecta intrusões, IPS as previne',
+                            'IDS é mais rápido que IPS',
+                            'IPS é mais barato que IDS',
+                            'Não há diferença significativa'
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: 'Qual benefício a segmentação de rede proporciona?',
+                        options: [
+                            'Aumenta a velocidade da rede',
+                            'Reduz custos de implementação',
+                            'Contém violações de segurança',
+                            'Elimina a necessidade de firewalls'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'Qual destes NÃO é um protocolo comum de VPN?',
+                        options: [
+                            'IPsec',
+                            'SSL/TLS',
+                            'PPTP',
+                            'FTP'
+                        ],
+                        correct: 3
+                    }
+                ]
+            },
+            'criptografia': {
+                title: 'Criptografia e Proteção de Dados',
+                material: `
+                    <h3>Introdução</h3>
+                    <p>A criptografia é a prática de codificar informações de forma que apenas entidades autorizadas possam acessá-las.</p>
+                    
+                    <h3>Conceitos Fundamentais</h3>
+                    <p>Conceitos fundamentais incluem:</p>
+                    <ul>
+                        <li><strong>Chaves simétricas e assimétricas:</strong> Sistemas que usam a mesma chave para cifrar e decifrar (simétrico) ou pares de chaves públicas/privadas (assimétrico).</li>
+                        <li><strong>Algoritmos de hash:</strong> Funções que convertem dados em valores de comprimento fixo, únicos para cada entrada.</li>
+                        <li><strong>Certificados digitais:</strong> Documentos eletrônicos que verificam a identidade de entidades.</li>
+                        <li><strong>Infraestrutura de chave pública (PKI):</strong> Sistema para criação, armazenamento e distribuição de certificados digitais.</li>
+                    </ul>
+                    
+                    <h3>Aplicações Práticas</h3>
+                    <p>Aplicações práticas incluem criptografia de dados em repouso e em trânsito, assinaturas digitais e proteção de comunicações.</p>
+                `,
+                quiz: [
+                    {
+                        question: 'Qual a principal diferença entre criptografia simétrica e assimétrica?',
+                        options: [
+                            'Simétrica é mais segura que assimétrica',
+                            'Assimétrica usa a mesma chave para cifrar e decifrar',
+                            'Simétrica é mais rápida que assimétrica',
+                            'Assimétrica é usada apenas para assinaturas digitais'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'Qual destes é um algoritmo de criptografia simétrica?',
+                        options: [
+                            'RSA',
+                            'AES',
+                            'ECDSA',
+                            'DSA'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'O que é um hash criptográfico?',
+                        options: [
+                            'Um método para quebrar criptografia',
+                            'Uma função que converte dados em valor de comprimento fixo',
+                            'Um tipo de chave de criptografia',
+                            'Um protocolo de comunicação segura'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual destes NÃO é uma propriedade desejável de funções hash?',
+                        options: [
+                            'Resistência a colisões',
+                            'Velocidade de processamento',
+                            'Reversibilidade',
+                            'Determinismo'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'O que é PKI?',
+                        options: [
+                            'Private Key Infrastructure',
+                            'Public Key Infrastructure',
+                            'Protected Key Implementation',
+                            'Primary Key Identifier'
+                        ],
+                        correct: 1
+                    }
+                ]
+            }
+            // Outros conteúdos seguem o mesmo padrão...
+        };
+        
+        // Dados das simulações
+        const simulations = {
+            'detecao-intrusao': {
+                title: 'Detecção de Intrusão em Rede Corporativa',
+                scenario: 'Você é um analista de segurança responsável por monitorar a rede da empresa TechCorp.',
+                description: 'Nesta simulação, você deverá analisar logs de tráfego de rede para identificar atividades suspeitas e potencialmente maliciosas.',
+                steps: [
+                    {
+                        question: 'Analise o log de tráfego abaixo. Qual endereço IP apresenta comportamento suspeito?',
+                        context: 'IP: 192.168.1.10 - Portas: 80, 443 - Tráfego: Normal\nIP: 192.168.1.15 - Portas: 22, 3389 - Tráfego: Normal\nIP: 192.168.1.23 - Portas: 21, 23, 445, 9999 - Tráfego: Intenso\nIP: 192.168.1.30 - Portas: 53 - Tráfego: Normal',
+                        options: ['192.168.1.10', '192.168.1.15', '192.168.1.23', '192.168.1.30'],
+                        correct: 2
+                    },
+                    {
+                        question: 'Qual é a possível explicação para o comportamento do IP suspeito?',
+                        context: 'O IP 192.168.1.23 está acessando múltiplas portas conhecidas por serem exploradas por malware.',
+                        options: [
+                            'É um servidor legítimo com múltiplos serviços',
+                            'É um usuário realizando trabalho normal',
+                            'Pode ser um dispositivo comprometido realizando varredura de portas',
+                            'É o firewall da rede'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'Qual ação você tomaria primeiro?',
+                        context: 'Você identificou atividade suspeita na rede.',
+                        options: [
+                            'Desligar imediatamente o dispositivo suspeito',
+                            'Notificar o supervisor e documentar as evidências',
+                            'Ignorar e continuar monitorando',
+                            'Bloquear todo o tráfego de rede'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'configuracao-firewall': {
+                title: 'Configuração de Regras de Firewall',
+                scenario: 'Você precisa configurar um firewall para proteger a rede da empresa SecureNet.',
+                description: 'Nesta simulação, você deverá criar regras de firewall para permitir tráfego legítimo enquanto bloqueia ameaças potenciais.',
+                steps: [
+                    {
+                        question: 'Qual regra você criaria para permitir acesso web (HTTP/HTTPS) mas bloquear outros serviços?',
+                        context: 'Os usuários precisam acessar sites, mas outros serviços como FTP e Telnet devem ser bloqueados por segurança.',
+                        options: [
+                            'Permitir todas as portas',
+                            'Permitir apenas portas 80 e 443, negar o resto',
+                            'Bloquear todas as portas',
+                            'Permitir portas 21, 23, 80 e 443'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Como você configuraria o firewall para permitir acesso remoto seguro?',
+                        context: 'Os administradores precisam acessar os servidores remotamente de forma segura.',
+                        options: [
+                            'Abrir a porta 23 (Telnet) para todos',
+                            'Abrir a porta 22 (SSH) apenas para IPs específicos',
+                            'Abrir a porta 3389 (RDP) para todos',
+                            'Não permitir nenhum acesso remoto'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual regra você implementaria para proteger contra ataques DDoS?',
+                        context: 'Você precisa proteger a rede contra ataques de negação de serviço.',
+                        options: [
+                            'Limitar o número de conexões por IP',
+                            'Permitir tráfego ilimitado de todas as fontes',
+                            'Bloquear todo o tráfego UDP',
+                            'Desativar o firewall completamente'
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            'analise-malware': {
+                title: 'Análise de Malware',
+                scenario: 'Você é um analista de malware investigando uma amostra suspeita encontrada em um servidor da empresa.',
+                description: 'Nesta simulação, você irá analisar características de malware e determinar seu comportamento e ameaças.',
+                steps: [
+                    {
+                        question: 'Ao analisar o arquivo suspeito, você identifica que ele tenta se copiar para a pasta System32. O que isso indica?',
+                        context: 'O arquivo apresenta comportamento de persistência no sistema.',
+                        options: [
+                            'É um arquivo legítimo do Windows',
+                            'Pode ser um malware tentando garantir execução na inicialização',
+                            'É um arquivo temporário inofensivo',
+                            'É um arquivo de backup do sistema'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'O malware estabelece conexões com um IP externo na porta 4444. O que isso sugere?',
+                        context: 'A porta 4444 é comumente usada por backdoors e shells reversos.',
+                        options: [
+                            'É uma atualização legítima do sistema',
+                            'Pode ser um backdoor permitindo acesso remoto',
+                            'É conexão de rede normal',
+                            'É um servidor web legítimo'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual seria sua próxima ação após confirmar que é malware?',
+                        context: 'Você identificou com certeza que o arquivo é malicioso.',
+                        options: [
+                            'Ignorar e continuar monitorando',
+                            'Isolar o sistema e iniciar procedimentos de resposta a incidentes',
+                            'Tentar executar o malware para ver o que acontece',
+                            'Fazer backup do malware para estudo futuro'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'resposta-incidentes': {
+                title: 'Resposta a Incidentes de Segurança',
+                scenario: 'Um incidente de segurança foi detectado em sua organização. Você faz parte da equipe de resposta.',
+                description: 'Nesta simulação, você irá gerenciar as etapas de resposta a um incidente de segurança.',
+                steps: [
+                    {
+                        question: 'Qual é a primeira ação que você deve tomar ao ser notificado sobre um incidente?',
+                        context: 'Um usuário reportou atividade suspeita em sua estação de trabalho.',
+                        options: [
+                            'Desligar todos os sistemas imediatamente',
+                            'Contatar a imprensa sobre o incidente',
+                            'Conter o incidente para evitar maior propagação',
+                            'Ignorar até ter mais informações'
+                        ],
+                        correct: 2
+                    },
+                    {
+                        question: 'Durante a contenção, você identifica o sistema comprometido. O que fazer?',
+                        context: 'Você precisa isolar o sistema sem perder evidências forenses.',
+                        options: [
+                            'Desligar o sistema imediatamente',
+                            'Desconectar o sistema da rede mantendo-o ligado',
+                            'Formatar o sistema imediatamente',
+                            'Continuar monitorando sem interferir'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Após conter o incidente, qual é o próximo passo?',
+                        context: 'O sistema está isolado e seguro.',
+                        options: [
+                            'Esquecer o incidente e seguir em frente',
+                            'Iniciar a erradicação e recuperação',
+                            'Manter o sistema isolado permanentemente',
+                            'Contratar novos funcionários de segurança'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'teste-invasao': {
+                title: 'Teste de Invasão Ética',
+                scenario: 'Você é um tester de penetração ético contratado para avaliar a segurança de uma empresa.',
+                description: 'Nesta simulação, você realizará testes de penetração autorizados em sistemas da organização.',
+                steps: [
+                    {
+                        question: 'Qual é a primeira fase de um teste de penetração?',
+                        context: 'Você está iniciando um engagement de pentest.',
+                        options: [
+                            'Exploração de vulnerabilidades',
+                            'Reconhecimento e coleta de informações',
+                            'Pós-exploração e persistência',
+                            'Relatório final'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Durante o reconhecimento, você descobre um servidor web com uma versão antiga do Apache. O que fazer?',
+                        context: 'Versões antigas de software podem conter vulnerabilidades conhecidas.',
+                        options: [
+                            'Ignorar e seguir para outros alvos',
+                            'Explorar vulnerabilidades conhecidas dessa versão',
+                            'Atualizar o servidor imediatamente',
+                            'Reportar como crítica sem testar'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Após explorar com sucesso uma vulnerabilidade, qual é a ação apropriada?',
+                        context: 'Você ganhou acesso a um sistema.',
+                        options: [
+                            'Instalar um backdoor permanente',
+                            'Roubar dados confidenciais',
+                            'Documentar o acesso e proceder conforme o escopo acordado',
+                            'Desligar o sistema'
+                        ],
+                        correct: 2
+                    }
+                ]
+            },
+            'forense-digital': {
+                title: 'Forense Digital Básica',
+                scenario: 'Você é um perito forense digital investigando um incidente de segurança.',
+                description: 'Nesta simulação, você irá coletar e analisar evidências digitais de um sistema comprometido.',
+                steps: [
+                    {
+                        question: 'Qual é o primeiro passo ao coletar evidências digitais?',
+                        context: 'Você chegou à cena do incidente.',
+                        options: [
+                            'Ligar o computador para ver o que acontece',
+                            'Documentar o estado original do sistema',
+                            'Remover o disco rígido imediatamente',
+                            'Executar ferramentas de análise no sistema'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual técnica você usaria para criar uma cópia forense do disco?',
+                        context: 'Você precisa preservar as evidências intactas.',
+                        options: [
+                            'Copiar arquivos manualmente',
+                            'Usar dd ou ferramenta similar para criar imagem bit-a-bit',
+                            'Fazer screenshot da tela',
+                            'Exportar apenas os logs do sistema'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'O que é hash MD5/SHA usado na forense digital?',
+                        context: 'Você está documentando evidências coletadas.',
+                        options: [
+                            'Para criptografar os dados',
+                            'Para verificar a integridade das evidências',
+                            'Para acelerar a análise',
+                            'Para ocultar informações'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'seguranca-aplicacoes': {
+                title: 'Segurança de Aplicações Web',
+                scenario: 'Você é um tester de segurança especializado em aplicações web.',
+                description: 'Nesta simulação, você irá identificar e explorar vulnerabilidades comuns em aplicações web.',
+                steps: [
+                    {
+                        question: 'O que é uma vulnerabilidade XSS (Cross-Site Scripting)?',
+                        context: 'Você está testando uma aplicação web para vulnerabilidades.',
+                        options: [
+                            'Injeção de comandos no sistema operacional',
+                            'Execução de scripts no navegador da vítima',
+                            'Quebra de autenticação',
+                            'Ataque de negação de serviço'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Como você testaria para SQL Injection?',
+                        context: 'A aplicação tem campos de entrada de dados.',
+                        options: [
+                            'Inserir tags HTML nos campos',
+                            'Inserir comandos SQL nos campos de entrada',
+                            'Enviar arquivos grandes',
+                            'Fazer muitas requisições rapidamente'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual é a melhor prática para prevenir XSS?',
+                        context: 'Você está recomendando correções para os desenvolvedores.',
+                        options: [
+                            'Validar e sanitizar todas as entradas do usuário',
+                            'Usar HTTPS',
+                            'Aumentar o timeout da sessão',
+                            'Desativar JavaScript'
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            'engenharia-social': {
+                title: 'Prevenção à Engenharia Social',
+                scenario: 'Você é responsável por treinar funcionários contra ataques de engenharia social.',
+                description: 'Nesta simulação, você irá educar usuários sobre como identificar e prevenir ataques de engenharia social.',
+                steps: [
+                    {
+                        question: 'O que caracteriza um ataque de phishing?',
+                        context: 'Funcionários estão recebendo e-mails suspeitos.',
+                        options: [
+                            'Ataque físico às instalações',
+                            'Tentativa de obter informações sensíveis através de disfarce',
+                            'Ataque de força bruta a senhas',
+                            'Exploração de vulnerabilidade de software'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Um funcionário recebe um e-mail urgente do "departamento de TI" pedindo sua senha. O que fazer?',
+                        context: 'O e-mail parece legítimo mas pede informações sensíveis.',
+                        options: [
+                            'Enviar a senha imediatamente',
+                            'Verificar a autenticidade do e-mail com o departamento de TI',
+                            'Encaminhar para todos os colegas',
+                            'Ignorar completamente'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual é a melhor defesa contra engenharia social?',
+                        context: 'Você está desenvolvendo um programa de conscientização.',
+                        options: [
+                            'Firewalls mais fortes',
+                            'Educação e treinamento contínuo dos usuários',
+                            'Senhas mais complexas',
+                            'Antivirus atualizado'
+                        ],
+                        correct: 1
+                    }
+                ]
+            },
+            'seguranca-cloud': {
+                title: 'Segurança em Ambientes de Nuvem',
+                scenario: 'Você é um arquiteto de segurança responsável por implementar controles em ambiente cloud.',
+                description: 'Nesta simulação, você irá configurar e gerenciar segurança em serviços de nuvem.',
+                steps: [
+                    {
+                        question: 'Qual é um risco específico de segurança em ambientes cloud?',
+                        context: 'Sua empresa está migrando para a nuvem.',
+                        options: [
+                            'Ataques DDoS',
+                            'Configurações incorretas de permissões',
+                            'Vírus de computador',
+                            'Problemas de hardware'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'O que é o princípio do menor privilégio em ambientes cloud?',
+                        context: 'Você está configurando políticas de acesso.',
+                        options: [
+                            'Dar a todos os usuários acesso administrativo',
+                            'Conceder apenas as permissões necessárias para cada função',
+                            'Não dar acesso a ninguém',
+                            'Usar a mesma senha para todos os serviços'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Qual prática ajuda a proteger dados em repouso na nuvem?',
+                        context: 'Você precisa proteger dados sensíveis armazenados na nuvem.',
+                        options: [
+                            'Criptografia dos dados',
+                            'Backup em fita',
+                            'Impressão dos dados',
+                            'Armazenamento apenas em memória'
+                        ],
+                        correct: 0
+                    }
+                ]
+            },
+            'gestao-riscos': {
+                title: 'Gestão de Riscos de Segurança',
+                scenario: 'Você é um analista de riscos responsável por avaliar e priorizar riscos de segurança.',
+                description: 'Nesta simulação, você irá identificar, analisar e tratar riscos de segurança da informação.',
+                steps: [
+                    {
+                        question: 'Qual é o primeiro passo no processo de gestão de riscos?',
+                        context: 'Sua organização está implementando um programa de gestão de riscos.',
+                        options: [
+                            'Implementar controles',
+                            'Identificar ativos e ameaças',
+                            'Contratar seguros',
+                            'Comprar novas tecnologias'
+                        ],
+                        correct: 1
+                    },
+                    {
+                        question: 'Como você calcula o risco?',
+                        context: 'Você está quantificando riscos identificados.',
+                        options: [
+                            'Probabilidade x Impacto',
+                            'Custo do controle x Benefício',
+                            'Tempo de inatividade x Número de usuários',
+                            'Velocidade da rede x Capacidade do servidor'
+                        ],
+                        correct: 0
+                    },
+                    {
+                        question: 'Qual estratégia você usaria para um risco de alta probabilidade e alto impacto?',
+                        context: 'Você identificou um risco crítico para a organização.',
+                        options: [
+                            'Aceitar o risco',
+                            'Mitigar o risco implementando controles',
+                            'Transferir o risco completamente',
+                            'Ignorar o risco'
+                        ],
+                        correct: 1
+                    }
+                ]
+            }
+        };
+
+        // Dados dos recursos
+        const resources = {
+            'glossario': {
+                title: 'Glossário de Segurança da Informação',
+                content: `
+                    <h3>Termos Essenciais em Segurança Cibernética</h3>
+                    <div class="term-list">
+                        <div class="term-item">
+                            <h4>Malware</h4>
+                            <p>Software malicioso projetado para danificar ou obter acesso não autorizado a sistemas de computador. Inclui vírus, worms, trojans, ransomware e spyware.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Phishing</h4>
+                            <p>Técnica de engenharia social que usa disfarce para obter informações sensíveis como senhas, números de cartão de crédito e dados pessoais.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Firewall</h4>
+                            <p>Sistema de segurança de rede que monitora e controla o tráfego de rede com base em regras de segurança predeterminadas.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>VPN (Rede Privada Virtual)</h4>
+                            <p>Tecnologia que cria uma conexão segura e criptografada através de uma rede pública como a Internet.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Autenticação Multifator (MFA)</h4>
+                            <p>Método de autenticação que requer duas ou mais verificações de identidade para conceder acesso a um sistema.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Criptografia</h4>
+                            <p>Processo de codificar informações para que apenas partes autorizadas possam acessá-las, convertendo dados legíveis em formato cifrado.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Zero Trust</h4>
+                            <p>Modelo de segurança que assume que nenhum usuário ou dispositivo deve ser confiável por padrão, mesmo dentro da rede corporativa.</p>
+                        </div>
+                        <div class="term-item">
+                            <h4>Penetration Testing</h4>
+                            <p>Prática de testar um sistema de computador, rede ou aplicação web para encontrar vulnerabilidades que um invasor poderia explorar.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'ferramentas': {
+                title: 'Ferramentas de Segurança da Informação',
+                content: `
+                    <h3>Principais Ferramentas para Profissionais de Segurança</h3>
+                    <div class="tool-list">
+                        <div class="tool-item">
+                            <h4>Wireshark</h4>
+                            <p><strong>Categoria:</strong> Analisador de protocolos de rede</p>
+                            <p><strong>Uso:</strong> Captura e analisa tráfego de rede em tempo real para solução de problemas, análise e investigação de segurança.</p>
+                            <p><strong>Aplicação:</strong> Detecção de atividades suspeitas na rede, análise de tráfego malicioso.</p>
+                        </div>
+                        <div class="tool-item">
+                            <h4>Nmap</h4>
+                            <p><strong>Categoria:</strong> Scanner de rede</p>
+                            <p><strong>Uso:</strong> Descoberta de hosts e serviços em uma rede de computadores, criando assim um "mapa" da rede.</p>
+                            <p><strong>Aplicação:</strong> Auditoria de segurança, inventário de rede, gerenciamento de atualizações de serviço.</p>
+                        </div>
+                        <div class="tool-item">
+                            <h4>Metasploit</h4>
+                            <p><strong>Categoria:</strong> Framework de testes de penetração</p>
+                            <p><strong>Uso:</strong> Desenvolvimento e execução de código exploit contra máquinas remotas.</p>
+                            <p><strong>Aplicação:</strong> Testes de vulnerabilidade, avaliação de segurança, pesquisa de segurança.</p>
+                        </div>
+                        <div class="tool-item">
+                            <h4>Nessus</h4>
+                            <p><strong>Categoria:</strong> Scanner de vulnerabilidades</p>
+                            <p><strong>Uso:</strong> Identifica vulnerabilidades, problemas de configuração e malware em sistemas computacionais.</p>
+                            <p><strong>Aplicação:</strong> Avaliação de vulnerabilidades, conformidade com políticas de segurança.</p>
+                        </div>
+                        <div class="tool-item">
+                            <h4>Burp Suite</h4>
+                            <p><strong>Categoria:</strong> Plataforma para testes de segurança de aplicações web</p>
+                            <p><strong>Uso:</strong> Ferramenta integrada para realizar testes de segurança em aplicações web.</p>
+                            <p><strong>Aplicação:</strong> Testes de invasão em aplicações web, análise de segurança.</p>
+                        </div>
+                        <div class="tool-item">
+                            <h4>Kali Linux</h4>
+                            <p><strong>Categoria:</strong> Distribuição Linux para testes de segurança</p>
+                            <p><strong>Uso:</strong> Sistema operacional com conjunto completo de ferramentas para testes de penetração e segurança.</p>
+                            <p><strong>Aplicação:</strong> Testes de segurança abrangentes, forense digital, engenharia reversa.</p>
+                        </div>
+                    </div>
+                `
+            },
+            'checklists': {
+                title: 'Checklists de Segurança',
+                content: `
+                    <h3>Listas de Verificação para Implementação de Segurança</h3>
+                    <div class="checklist-category">
+                        <div class="checklist-item">
+                            <h4>Checklist de Hardening de Servidores</h4>
+                            <p>Procedimentos para fortalecer a segurança de servidores:</p>
+                            <ol class="checklist-steps">
+                                <li>Remover serviços e aplicações desnecessárias</li>
+                                <li>Aplicar patches de segurança e atualizações regularmente</li>
+                                <li>Configurar firewalls para permitir apenas tráfego essencial</li>
+                                <li>Implementar políticas de senha fortes</li>
+                                <li>Configurar logging e monitoramento centralizado</li>
+                                <li>Desativar contas de usuário padrão ou desnecessárias</li>
+                                <li>Implementar controle de acesso baseado em função (RBAC)</li>
+                                <li>Criptografar dados sensíveis em repouso e em trânsito</li>
+                            </ol>
+                        </div>
+                        <div class="checklist-item">
+                            <h4>Checklist de Segurança de Aplicações Web</h4>
+                            <p>Medidas para proteger aplicações web contra ameaças comuns:</p>
+                            <ol class="checklist-steps">
+                                <li>Validar e sanitizar todas as entradas do usuário</li>
+                                <li>Implementar autenticação segura e controle de sessão</li>
+                                <li>Proteger contra ataques XSS (Cross-Site Scripting)</li>
+                                <li>Prevenir SQL Injection usando prepared statements</li>
+                                <li>Implementar proteção CSRF (Cross-Site Request Forgery)</li>
+                                <li>Usar HTTPS em todas as páginas</li>
+                                <li>Configurar headers de segurança HTTP adequados</li>
+                                <li>Realizar testes de segurança regulares</li>
+                            </ol>
+                        </div>
+                        <div class="checklist-item">
+                            <h4>Checklist de Resposta a Incidentes</h4>
+                            <p>Procedimentos para lidar com incidentes de segurança:</p>
+                            <ol class="checklist-steps">
+                                <li>Preparação: Ter uma equipe e plano de resposta definidos</li>
+                                <li>Identificação: Detectar e analisar o incidente</li>
+                                <li>Contenção: Isolar sistemas afetados para evitar propagação</li>
+                                <li>Erradicação: Remover a causa raiz do incidente</li>
+                                <li>Recuperação: Restaurar sistemas e operações normais</li>
+                                <li>Lições Aprendidas: Documentar e melhorar processos</li>
+                            </ol>
+                        </div>
+                        <div class="checklist-item">
+                            <h4>Checklist de Segurança para Dispositivos Móveis</h4>
+                            <p>Medidas para proteger dispositivos móveis corporativos:</p>
+                            <ol class="checklist-steps">
+                                <li>Exigir autenticação forte (senha, PIN, biométrica)</li>
+                                <li>Implementar criptografia de dados no dispositivo</li>
+                                <li>Configurar MDM (Mobile Device Management)</li>
+                                <li>Instalar e manter software antivírus/antimalware</li>
+                                <li>Habilitar apagamento remoto em caso de perda/roubo</li>
+                                <li>Restringir instalação de aplicações não autorizadas</li>
+                                <li>Educar usuários sobre ameaças móveis</li>
+                            </ol>
+                        </div>
+                    </div>
+                `
+            },
+            'relatorios': {
+                title: 'Modelos de Relatórios de Segurança',
+                content: `
+                    <h3>Modelos para Documentação e Comunicação em Segurança</h3>
+                    <div class="report-types">
+                        <div class="report-item">
+                            <h4>Relatório de Auditoria de Segurança</h4>
+                            <p><strong>Objetivo:</strong> Documentar resultados de auditorias de segurança realizadas em sistemas, redes ou processos.</p>
+                            <p><strong>Estrutura Recomendada:</strong></p>
+                            <ol class="checklist-steps">
+                                <li>Resumo Executivo</li>
+                                <li>Escopo da Auditoria</li>
+                                <li>Metodologia Utilizada</li>
+                                <li>Resultados e Achados</li>
+                                <li>Recomendações de Melhoria</li>
+                                <li>Plano de Ação</li>
+                                <li>Anexos e Evidências</li>
+                            </ol>
+                        </div>
+                        <div class="report-item">
+                            <h4>Relatório de Incidentes de Segurança</h4>
+                            <p><strong>Objetivo:</strong> Documentar e analisar incidentes de segurança para aprendizado e melhoria contínua.</p>
+                            <p><strong>Estrutura Recomendada:</strong></p>
+                            <ol class="checklist-steps">
+                                <li>Identificação do Incidente</li>
+                                <li>Cronologia dos Eventos</li>
+                                <li>Impacto e Escopo</li>
+                                <li>Ações de Resposta Tomadas</li>
+                                <li>Causa Raiz Identificada</li>
+                                <li>Lições Aprendidas</li>
+                                <li>Recomendações para Prevenção Futura</li>
+                            </ol>
+                        </div>
+                        <div class="report-item">
+                            <h4>Relatório de Vulnerabilidades</h4>
+                            <p><strong>Objetivo:</strong> Reportar vulnerabilidades identificadas durante testes de segurança ou varreduras.</p>
+                            <p><strong>Estrutura Recomendada:</strong></p>
+                            <ol class="checklist-steps">
+                                <li>Descrição da Vulnerabilidade</li>
+                                <li>Classificação de Severidade (CVSS)</li>
+                                <li>Sistemas/Serviços Afetados</li>
+                                <li>Passos para Reprodução</li>
+                                <li>Impacto Potencial</li>
+                                <li>Recomendações de Correção</li>
+                                <li>Prazo Sugerido para Resolução</li>
+                            </ol>
+                        </div>
+                        <div class="report-item">
+                            <h4>Relatório de Conformidade</h4>
+                            <p><strong>Objetivo:</strong> Demonstrar conformidade com regulamentações, padrões ou políticas de segurança.</p>
+                            <p><strong>Estrutura Recomendada:</strong></p>
+                            <ol class="checklist-steps">
+                                <li>Escopo da Conformidade</li>
+                                <li>Requisitos Avaliados</li>
+                                <li>Estado de Conformidade por Item</li>
+                                <li>Evidências de Conformidade</li>
+                                <li>Não Conformidades Identificadas</li>
+                                <li>Plano de Correção</li>
+                                <li>Conclusões e Recomendações</li>
+                            </ol>
+                        </div>
+                        <div class="report-item">
+                            <h4>Relatório de Teste de Penetração</h4>
+                            <p><strong>Objetivo:</strong> Documentar resultados de testes de penetração autorizados em sistemas.</p>
+                            <p><strong>Estrutura Recomendada:</strong></p>
+                            <ol class="checklist-steps">
+                                <li>Resumo Executivo</li>
+                                <li>Metodologia e Escopo</li>
+                                <li>Vulnerabilidades Exploradas</li>
+                                <li>Nível de Acesso Obtido</li>
+                                <li>Análise de Impacto</li>
+                                <li>Recomendações Técnicas</li>
+                                <li>Evidências e Comprovações</li>
+                            </ol>
+                        </div>
+                    </div>
+                `
+            }
+        };
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', function() {
+            // Verificar se há um usuário logado
+            const savedUser = localStorage.getItem('cybertrain_user');
+            if (savedUser) {
+                currentUser = JSON.parse(savedUser);
+                showApp();
+            } else {
+                showAuth();
+            }
+            
+            // Iniciar temporizador de estudo se o usuário estiver logado
+            if (currentUser) {
+                startStudyTimer();
+            }
+        });
+        
+        // Funções de autenticação
+        function switchAuthTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            
+            if (tab === 'login') {
+                document.querySelector('.auth-tab:nth-child(1)').classList.add('active');
+                document.getElementById('login-form').classList.add('active');
+            } else {
+                document.querySelector('.auth-tab:nth-child(2)').classList.add('active');
+                document.getElementById('register-form').classList.add('active');
+            }
+        }
+        
+        function login() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            // Verificação simples
+            if (!email || !password) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            // Simular autenticação
+            currentUser = {
+                name: 'Usuário CyberTrain',
+                email: email,
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('cybertrain_user', JSON.stringify(currentUser));
+            showApp();
+            startStudyTimer();
+        }
+        
+        function register() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirmPassword = document.getElementById('register-confirm-password').value;
+            
+            // Verificação simples
+            if (!name || !email || !password || !confirmPassword) {
+                alert('Por favor, preencha todos os campos.');
+                return;
+            }
+            
+            if (password !== confirmPassword) {
+                alert('As senhas não coincidem.');
+                return;
+            }
+            
+            // Simular registro
+            currentUser = {
+                name: name,
+                email: email,
+                joined: new Date().toISOString()
+            };
+            
+            localStorage.setItem('cybertrain_user', JSON.stringify(currentUser));
+            showApp();
+            startStudyTimer();
+        }
+        
+        function logout() {
+            currentUser = null;
+            localStorage.removeItem('cybertrain_user');
+            stopStudyTimer();
+            showAuth();
+        }
+        
+        // Navegação
+        function showAuth() {
+            hideAllSections();
+            document.getElementById('auth-section').classList.remove('hidden');
+        }
+        
+        function showApp() {
+            hideAllSections();
+            document.getElementById('dashboard').classList.remove('hidden');
+            updateUserInfo();
+        }
+        
+        function showSection(sectionId) {
+            hideAllSections();
+            document.getElementById(sectionId).classList.remove('hidden');
+            
+            if (sectionId === 'dashboard') {
+                updateUserInfo();
+            } else if (sectionId === 'feedback') {
+                loadUserFeedback();
+            }
+        }
+        
+        function hideAllSections() {
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                section.classList.add('hidden');
+            });
+        }
+        
+        function updateUserInfo() {
+            if (currentUser) {
+                document.getElementById('user-name').textContent = currentUser.name;
+                
+                // Atualizar estatísticas (simulação)
+                document.getElementById('overall-score').textContent = '0';
+                document.getElementById('completed-content').textContent = '0/12';
+                document.getElementById('study-time').textContent = '0h';
+                document.getElementById('completed-simulations').textContent = '0/10';
+            }
+        }
+        
+        // Conteúdos
+        function openContent(contentId) {
+            currentContent = contentId;
+            const content = contents[contentId];
+            
+            if (content) {
+                document.getElementById('content-title').textContent = content.title;
+                document.getElementById('content-material').innerHTML = content.material;
+                
+                // Configurar quiz
+                currentQuiz = content.quiz;
+                currentQuestionIndex = 0;
+                userAnswers = [];
+                quizScore = 0;
+                
+                // Mostrar quiz e esconder resultados
+                document.getElementById('content-quiz').classList.remove('hidden');
+                document.getElementById('quiz-results').classList.add('hidden');
+                
+                // Carregar primeira pergunta
+                loadQuestion();
+                
+                showSection('content-detail');
+            }
+        }
+        
+        function loadQuestion() {
+            if (!currentQuiz || currentQuestionIndex >= currentQuiz.length) return;
+            
+            const question = currentQuiz[currentQuestionIndex];
+            document.getElementById('quiz-question-text').textContent = question.question;
+            document.getElementById('quiz-progress').textContent = `Pergunta ${currentQuestionIndex + 1} de ${currentQuiz.length}`;
+            
+            const optionsContainer = document.getElementById('quiz-options-container');
+            optionsContainer.innerHTML = '';
+            
+            question.options.forEach((option, index) => {
+                const optionElement = document.createElement('div');
+                optionElement.className = 'quiz-option';
+                optionElement.textContent = option;
+                optionElement.onclick = function() { selectQuizOption(this, index); };
+                optionsContainer.appendChild(optionElement);
+            });
+            
+            // Atualizar navegação
+            document.getElementById('prev-question').disabled = currentQuestionIndex === 0;
+            document.getElementById('next-question').classList.remove('hidden');
+            document.getElementById('finish-quiz').classList.add('hidden');
+            
+            if (currentQuestionIndex === currentQuiz.length - 1) {
+                document.getElementById('next-question').classList.add('hidden');
+                document.getElementById('finish-quiz').classList.remove('hidden');
+            }
+        }
+        
+        function selectQuizOption(element, optionIndex) {
+            // Remover seleção de todas as opções
+            const container = element.parentElement;
+            container.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Selecionar a opção clicada
+            element.classList.add('selected');
+            
+            // Salvar resposta
+            userAnswers[currentQuestionIndex] = optionIndex;
+        }
+        
+        function nextQuestion() {
+            if (currentQuestionIndex < currentQuiz.length - 1) {
+                currentQuestionIndex++;
+                loadQuestion();
+            }
+        }
+        
+        function previousQuestion() {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--;
+                loadQuestion();
+            }
+        }
+        
+        function finishQuiz() {
+            // Calcular pontuação
+            quizScore = 0;
+            for (let i = 0; i < currentQuiz.length; i++) {
+                if (userAnswers[i] === currentQuiz[i].correct) {
+                    quizScore++;
+                }
+            }
+            
+            // Mostrar resultados
+            document.getElementById('content-quiz').classList.add('hidden');
+            document.getElementById('quiz-results').classList.remove('hidden');
+            
+            document.getElementById('quiz-score').textContent = `${quizScore}/${currentQuiz.length}`;
+            
+            let message = '';
+            const percentage = (quizScore / currentQuiz.length) * 100;
+            if (percentage >= 80) {
+                message = 'Excelente! Você demonstrou um ótimo entendimento do conteúdo.';
+            } else if (percentage >= 60) {
+                message = 'Bom trabalho! Você compreendeu a maior parte do conteúdo.';
+            } else {
+                message = 'Continue estudando! Revise o material e tente novamente.';
+            }
+            
+            document.getElementById('quiz-message').textContent = message;
+            
+            // Atualizar progresso no dashboard
+            updateUserProgress();
+        }
+        
+        function updateUserProgress() {
+            // Em uma implementação real, isso atualizaria o progresso do usuário no servidor
+            console.log('Progresso atualizado:', quizScore, 'de', currentQuiz.length, 'acertos');
+        }
+        
+        // Simulações
+        function openSimulation(simulationId) {
+            currentSimulation = simulationId;
+            const simulation = simulations[simulationId];
+            
+            if (simulation) {
+                document.getElementById('simulation-title').textContent = simulation.title;
+                document.getElementById('simulation-scenario').textContent = simulation.scenario;
+                document.getElementById('simulation-description').textContent = simulation.description;
+                
+                // Resetar simulação
+                currentSimulationStep = 0;
+                simulationScore = 0;
+                userAnswers = [];
+                
+                // Mostrar simulação e esconder resultados
+                document.querySelector('.quiz-container').classList.remove('hidden');
+                document.getElementById('simulation-results').classList.add('hidden');
+                
+                // Carregar primeiro passo da simulação
+                loadSimulationStep();
+                
+                showSection('simulation-detail');
+            }
+        }
+        
+        function loadSimulationStep() {
+            const simulation = simulations[currentSimulation];
+            const step = simulation.steps[currentSimulationStep];
+            
+            if (step) {
+                document.getElementById('simulation-question').textContent = step.question;
+                document.getElementById('simulation-context').textContent = step.context;
+                document.getElementById('simulation-progress-text').textContent = `Passo ${currentSimulationStep + 1} de ${simulation.steps.length}`;
+                
+                const optionsContainer = document.getElementById('simulation-options');
+                optionsContainer.innerHTML = '';
+                
+                step.options.forEach((option, index) => {
+                    const optionElement = document.createElement('div');
+                    optionElement.className = 'quiz-option';
+                    optionElement.textContent = option;
+                    optionElement.onclick = function() { selectSimulationOption(this, index); };
+                    optionsContainer.appendChild(optionElement);
+                });
+                
+                // Atualizar navegação
+                document.getElementById('prev-simulation-step').disabled = currentSimulationStep === 0;
+                document.getElementById('next-simulation-step').classList.remove('hidden');
+                document.getElementById('finish-simulation').classList.add('hidden');
+                
+                if (currentSimulationStep === simulation.steps.length - 1) {
+                    document.getElementById('next-simulation-step').classList.add('hidden');
+                    document.getElementById('finish-simulation').classList.remove('hidden');
+                }
+                
+                // Atualizar progresso
+                const progress = ((currentSimulationStep + 1) / simulation.steps.length) * 100;
+                document.getElementById('simulation-progress-bar').style.width = `${progress}%`;
+                document.getElementById('simulation-progress-percent').textContent = `${Math.round(progress)}% concluído`;
+            }
+        }
+        
+        function selectSimulationOption(element, optionIndex) {
+            // Remover seleção de todas as opções
+            const container = element.parentElement;
+            container.querySelectorAll('.quiz-option').forEach(opt => {
+                opt.classList.remove('selected');
+            });
+            
+            // Selecionar a opção clicada
+            element.classList.add('selected');
+            
+            // Salvar resposta
+            userAnswers[currentSimulationStep] = optionIndex;
+        }
+        
+        function previousSimulationStep() {
+            if (currentSimulationStep > 0) {
+                currentSimulationStep--;
+                loadSimulationStep();
+            }
+        }
+        
+        function nextSimulationStep() {
+            if (currentSimulationStep < simulations[currentSimulation].steps.length - 1) {
+                currentSimulationStep++;
+                loadSimulationStep();
+            }
+        }
+        
+        function finishSimulation() {
+            // Calcular pontuação
+            const simulation = simulations[currentSimulation];
+            simulationScore = 0;
+            for (let i = 0; i < simulation.steps.length; i++) {
+                if (userAnswers[i] === simulation.steps[i].correct) {
+                    simulationScore++;
+                }
+            }
+            
+            // Mostrar resultados
+            document.querySelector('.quiz-container').classList.add('hidden');
+            document.getElementById('simulation-results').classList.remove('hidden');
+            
+            document.getElementById('simulation-score').textContent = `${simulationScore}/${simulation.steps.length}`;
+            
+            let message = '';
+            const percentage = (simulationScore / simulation.steps.length) * 100;
+            if (percentage >= 80) {
+                message = 'Excelente desempenho! Você demonstrou habilidades avançadas na simulação.';
+            } else if (percentage >= 60) {
+                message = 'Bom trabalho! Com mais prática você se tornará um especialista.';
+            } else {
+                message = 'Continue praticando! Revise os conceitos e tente novamente.';
+            }
+            
+            document.getElementById('simulation-message').textContent = message;
+        }
+        
+        function applySimulationSettings() {
+            const difficulty = document.getElementById('simulation-difficulty').value;
+            const scenarioType = document.getElementById('simulation-scenario-type').value;
+            const timeLimit = document.getElementById('simulation-time-limit').value;
+            
+            alert(`Configurações aplicadas:\nDificuldade: ${difficulty}\nCenário: ${scenarioType}\nLimite de tempo: ${timeLimit} minutos`);
+            
+            // Em uma implementação real, essas configurações afetariam a simulação
+        }
+        
+        // Recursos
+        function openResource(resourceId) {
+            currentResource = resourceId;
+            const resource = resources[resourceId];
+            
+            if (resource) {
+                document.getElementById('resource-title').textContent = resource.title;
+                document.getElementById('resource-content').innerHTML = resource.content;
+                
+                showSection('resource-detail');
+            }
+        }
+        
+        // Feedback
+        function submitFeedback() {
+            const rating = document.getElementById('feedback-rating').value;
+            const category = document.getElementById('feedback-category').value;
+            const message = document.getElementById('feedback-message').value;
+            
+            if (!message.trim()) {
+                alert('Por favor, escreva uma mensagem de feedback.');
+                return;
+            }
+            
+            // Salvar feedback
+            const feedback = {
+                rating: parseInt(rating),
+                category: category,
+                message: message,
+                date: new Date().toISOString()
+            };
+            
+            let userFeedbacks = JSON.parse(localStorage.getItem('cybertrain_feedbacks') || '[]');
+            userFeedbacks.push(feedback);
+            localStorage.setItem('cybertrain_feedbacks', JSON.stringify(userFeedbacks));
+            
+            alert('Obrigado pelo seu feedback! Sua opinião é muito importante para nós.');
+            
+            // Limpar formulário
+            document.getElementById('feedback-message').value = '';
+            
+            // Recarregar lista de feedbacks
+            loadUserFeedback();
+        }
+        
+        function loadUserFeedback() {
+            const userFeedbacks = JSON.parse(localStorage.getItem('cybertrain_feedbacks') || '[]');
+            const feedbackList = document.getElementById('user-feedback-list');
+            
+            if (userFeedbacks.length === 0) {
+                feedbackList.innerHTML = '<p>Você ainda não enviou nenhum feedback.</p>';
+                return;
+            }
+            
+            feedbackList.innerHTML = '';
+            
+            userFeedbacks.reverse().forEach(feedback => {
+                const feedbackItem = document.createElement('div');
+                feedbackItem.className = 'feedback-item';
+                
+                const stars = '⭐'.repeat(feedback.rating) + '☆'.repeat(5 - feedback.rating);
+                
+                feedbackItem.innerHTML = `
+                    <div class="feedback-header">
+                        <strong>Categoria: ${getCategoryName(feedback.category)}</strong>
+                        <span class="feedback-rating">${stars}</span>
+                    </div>
+                    <p>${feedback.message}</p>
+                    <small>Enviado em: ${new Date(feedback.date).toLocaleDateString('pt-BR')}</small>
+                `;
+                
+                feedbackList.appendChild(feedbackItem);
+            });
+        }
+        
+        function getCategoryName(category) {
+            const categories = {
+                'content': 'Conteúdos',
+                'simulations': 'Simulações',
+                'usability': 'Usabilidade',
+                'performance': 'Desempenho',
+                'suggestions': 'Sugestões',
+                'other': 'Outro'
+            };
+            
+            return categories[category] || category;
+        }
+        
+        // Temporizador de estudo
+        function startStudyTimer() {
+            studyStartTime = new Date();
+            studyTimer = setInterval(() => {
+                totalStudyTime += 1;
+                const hours = Math.floor(totalStudyTime / 3600);
+                const minutes = Math.floor((totalStudyTime % 3600) / 60);
+                document.getElementById('study-time').textContent = `${hours}h ${minutes}m`;
+            }, 1000);
+        }
+        
+        function stopStudyTimer() {
+            if (studyTimer) {
+                clearInterval(studyTimer);
+                studyTimer = null;
+            }
+        }
+    </script>
+</body>
+</html>
